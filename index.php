@@ -80,17 +80,11 @@
                   upper case
                 </label>
               </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="caseSelection" id="caseSelection2" value="first">
-                  upper case first letter of each word
-                </label>
-              </div>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-sm-4">
-              <button type="submit" class="btn btn-primary btn-lg" id="generatePassword">Generate Password</button>
+              <input type="submit" class="btn btn-primary btn-lg" id="generatePassword" value="Generate Password">
             </div>
             <div class="col-sm-4">
                 <span id="generatedPassword" class="alert"></span>

@@ -10,9 +10,62 @@
 
 define("WORD_COUNT", 2);
 define("NUMBERS_COUNT", 1);
-define("SPECIAL_CHARACTERS_COUNT", 1);
+define("SPECIAL_CHARACTERS_COUNT", 0);
 define("INCLUDE_HYPHENS", false);
 define("CASE_SELECTION", "lower");
+define("DICTIONARY_LOCATION", "http://www.paulnoll.com/Books/Clear-English/words-29-30-hundred.html");
+
+// return a random pick of words
+function get_words($count) {
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+		CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_URL => DICTIONARY_LOCATION,
+		CURLOPT_USERAGENT => 'p2.oprisan.com password generator'
+	));
+	// Send the request & save response to $resp
+	$resp = curl_exec($curl);
+
+	// Create a words dictionary
+	preg_match_all("'<li>(.*?)</li>'si", $resp, $match);
+	$words = array();
+	foreach($match[1] as $word) {
+		array_push($words, trim($word));
+	}
+	// Close request to clear up some resources
+	curl_close($curl);
+
+	// Return a random selection of words
+	$picks = array_rand($words, $count);
+	$words_picked = array();
+	foreach($picks as $key => $pick) {
+		array_push($words_picked, $words[$pick]);
+	}
+
+	return $words_picked;
+}
+
+// get a pick of special characters
+function get_special_chars($count) {
+	$possible = "#$%^&*()+=-[]';,./{}|:<>?~";
+	$result = null;
+	for($i = 0; $i < $count; $i++) {
+		$result .= substr(str_shuffle($possible), 0, $count);
+	}
+
+	return $result;
+}
+
+// get a pick of numbers
+function get_numbers($count) {
+	$possible = "0123456789";
+	$result = null;
+	for($i = 0; $i < $count; $i++) {
+		$result .= substr(str_shuffle($possible), 0, $count);
+	}
+
+	return $result;
+}
 
 // set up default response
 $password = null;
@@ -26,12 +79,44 @@ $settings = array(
 	'caseSelection' => $_POST['caseSelection'] ? $_POST['caseSelection'] : CASE_SELECTION
 );
 
+// get raw words picked based on setting
+$words = get_words($settings['wordCount']);
+
+// build special chars selection
+if ($settings['specialCharactersCount']) {
+	$specialChars = get_special_chars($settings['specialCharactersCount']);
+} else {
+	$specialChars = "";
+}
+
+// get random numbers
+if ($settings['numbersCount']) {
+	$numbers = get_numbers($settings['numbersCount']);
+} else {
+	$numbers = "";
+}
+
+// upper or lower case the words
+if ($settings['numbersCount'] == "lower") {
+	$words = array_change_key_case($words, CASE_LOWER);
+} else {
+	$words = array_change_key_case($words, CASE_UPPER);	
+}
+
+// add hyphens and convert array of words to string
+if ($settings['includeHyphens']) {
+	$words_string = implode('-', $words);
+} else {
+	$words_string = implode($words);
+}
+
+$password = $words_string.$specialChars.$numbers;
+
 // return results to client
 if ($password != null) {
 	$data['result'] = $password;
 	$data['success'] = true;
 }
-
 
 header('Content-Type: application/json');
 echo json_encode($data);

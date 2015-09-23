@@ -39,6 +39,8 @@ $(function() {
 				} else {
 					alert('something went wrong! please try again!');
 				}
+
+				return false;
 		  });
 
 		return false;
