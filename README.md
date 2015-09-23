@@ -17,7 +17,6 @@ A number of options are available to generate a desired password, such as
 - Whether to include a special symbol
 - How many special characters to use
 - Spaces or camelCase or hyphens
-- Max length
 - All upper case, or all lower case, or make the first letter of each word upper case
 
 We will use Bootstrap 4 beta for the CSS styling.
@@ -29,3 +28,4 @@ http://oprisan.com/dwa15/p2.mp4
 Plugins and details:
 ------------------------
 1. Bootstrap 4.0.0-alpha
+2. jQuery 2.1.3

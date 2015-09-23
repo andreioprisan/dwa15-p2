@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
-    <!--<script src="js/bootstrap.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="js/formsubmit.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -50,19 +50,13 @@
           <div class="form-group row">
             <label for="numbersCount" class="col-sm-4 form-control-label">How many numbers should be included?</label>
             <div class="col-sm-2">
-              <input type="text" class="form-control" id="numbersCount" placeholder="0">
+              <input type="text" class="form-control" id="numbersCount" name="numbersCount" placeholder="0">
             </div>
           </div>
           <div class="form-group row">
             <label for="specialCharactersCount" class="col-sm-4 form-control-label">How many special characters should be included?</label>
             <div class="col-sm-2">
-              <input type="text" class="form-control" id="specialCharactersCount" placeholder="0">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="passwordLength" class="col-sm-4 form-control-label">How long should the password be</label>
-            <div class="col-sm-2">
-              <input type="text" class="form-control" id="passwordLength" placeholder="16">
+              <input type="text" class="form-control" id="specialCharactersCount" name="specialCharactersCount" placeholder="0">
             </div>
           </div>
           <div class="form-group row">
@@ -96,17 +90,15 @@
           </div>
           <div class="form-group row">
             <div class="col-sm-4">
-              <button type="submit" class="btn btn-primary btn-lg">Generate Password</button>
+              <button type="submit" class="btn btn-primary btn-lg" id="generatePassword">Generate Password</button>
             </div>
             <div class="col-sm-4">
-            <?php if ($generatedPassword) { ?>
-            <?php } ?>
+                <span id="generatedPassword" class="alert"></span>
             </div>
           </div>
         </form>
       </div>
     </div>
-
     <div class="container">
         <div class="pw-head">
             <a href="http://xkcd.com/936/">
