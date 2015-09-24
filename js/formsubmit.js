@@ -5,7 +5,7 @@ $(function() {
 		var numbersCount = $('input[name="numbersCount"]').val();
 		var specialCharactersCount = $('input[name="specialCharactersCount"]').val();
 		var includeHyphens = $('input[name="includeHyphens"]').prop('checked');
-		var caseSelection = $('input[name="caseSelection"]').val();
+		var caseSelection = $('input[name="caseSelection"]:checked').val()
 
 		// validate user input
 		if (numbersCount != "" && !$.isNumeric(numbersCount)) {
@@ -16,11 +16,6 @@ $(function() {
 		if (specialCharactersCount != "" && !$.isNumeric(specialCharactersCount)) {
 			alert('Please enter a number for the number of special characters to include!');
 			return false;
-		}
-
-		// set password default legth
-		if (passwordLength == "") {
-			passwordLength = 16;	
 		}
 
 		// post settings to the password generator and display results

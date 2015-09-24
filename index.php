@@ -84,10 +84,10 @@
           </div>
           <div class="form-group row">
             <div class="col-sm-4">
-              <input type="submit" class="btn btn-primary btn-lg" id="generatePassword" value="Generate Password">
+              <input type="button" class="btn btn-primary btn-lg" id="generatePassword" value="Generate Password">
             </div>
-            <div class="col-sm-4">
-                <span id="generatedPassword" class="alert"></span>
+            <div class="col-sm-8">
+                <span id="generatedPassword" class="alert alert-success" role="alert"></span>
             </div>
           </div>
         </form>

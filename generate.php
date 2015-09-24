@@ -48,21 +48,16 @@ function get_words($count) {
 // get a pick of special characters
 function get_special_chars($count) {
 	$possible = "#$%^&*()+=-[]';,./{}|:<>?~";
-	$result = null;
-	for($i = 0; $i < $count; $i++) {
-		$result .= substr(str_shuffle($possible), 0, $count);
-	}
+	$result = substr(str_shuffle($possible), 0, $count);
 
 	return $result;
 }
 
 // get a pick of numbers
 function get_numbers($count) {
+	echo $cound;
 	$possible = "0123456789";
-	$result = null;
-	for($i = 0; $i < $count; $i++) {
-		$result .= substr(str_shuffle($possible), 0, $count);
-	}
+	$result = substr(str_shuffle($possible), 0, $count);
 
 	return $result;
 }
@@ -73,9 +68,9 @@ $data = array('success' => false, 'result' => $password);
 
 $settings = array(
 	'wordCount' => $_POST['wordCount'] ? (int)$_POST['wordCount'] : WORD_COUNT,
-	'numbersCount' => $_POST['numbersCount'] ? (int)$_POST['numbersCount'] : NUMBERS_COUNT,
+	'numbersCount' => $_POST['numbersCount'],
 	'specialCharactersCount' => $_POST['specialCharactersCount'] ? (int)$_POST['specialCharactersCount'] : SPECIAL_CHARACTERS_COUNT,
-	'includeHyphens' => $_POST['includeHyphens'] ? (bool)$_POST['includeHyphens'] : INCLUDE_HYPHENS,
+	'includeHyphens' => $_POST['includeHyphens'],
 	'caseSelection' => $_POST['caseSelection'] ? $_POST['caseSelection'] : CASE_SELECTION
 );
 
@@ -97,17 +92,19 @@ if ($settings['numbersCount']) {
 }
 
 // upper or lower case the words
-if ($settings['numbersCount'] == "lower") {
+$words = array_flip($words);
+if ($settings['caseSelection'] == "lower") {
 	$words = array_change_key_case($words, CASE_LOWER);
 } else {
 	$words = array_change_key_case($words, CASE_UPPER);	
 }
+$words = array_flip($words);
 
 // add hyphens and convert array of words to string
-if ($settings['includeHyphens']) {
+if ($settings['includeHyphens'] == "true") {
 	$words_string = implode('-', $words);
 } else {
-	$words_string = implode($words);
+	$words_string = implode('', $words);
 }
 
 $password = $words_string.$specialChars.$numbers;

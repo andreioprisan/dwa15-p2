@@ -5,3 +5,6 @@ body {
   padding: 0rem 1.5rem;
   text-align: center;
 }
+#generatedPassword {
+	display: none;
+}
